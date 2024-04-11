@@ -36,7 +36,7 @@ router.post("/login",async (req,res)=>{
         if(!match){
             return res.status(401).json("Wrong credentials!")
         }
-        const token=jwt.sign({_id:user._id,username:user.username,email:user.email},process.env.SECRET,{expiresIn:"10d"})
+        const token=jwt.sign({_id:user._id,username:user.username,email:user.email},process.env.SECRET,{expiresIn:"3d"})
         const {password,...info}=user._doc
         res.cookie("token",token).status(200).json(info)
 
@@ -59,16 +59,16 @@ router.get("/logout",async (req,res)=>{
     }
 })
 
-//REFETCH USER
-router.get("/refetch", (req,res)=>{
-    const token=req.cookies.token
-    jwt.verify(token,process.env.SECRET,{},async (err,data)=>{
-        if(err){
-            return res.status(404).json(err)
-        }
-        res.status(200).json(data)
-    })
-})
+// //REFETCH USER
+// router.get("/refetch", (req,res)=>{
+//     const token=req.cookies.token
+//     jwt.verify(token,process.env.SECRET,{},async (err,data)=>{
+//         if(err){
+//             return res.status(404).json(err)
+//         }
+//         res.status(200).json(data)
+//     })
+// })
 
 
 
