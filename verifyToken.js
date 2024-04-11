@@ -3,11 +3,8 @@ const jwt=require('jsonwebtoken')
 const verifyToken=(req,res,next)=>{
     const token=req.cookies.token
     // console.log(token)
-    // if(!token){
-    //     return res.status(401).json("You are not authenticated!")
-    // }
-    if (!token) {
-        return res.redirect('/login');
+    if(!token){
+        return res.status(401).json("You are not authenticated!")
     }
     jwt.verify(token,process.env.SECRET, (err,data)=>{
         if(err){
